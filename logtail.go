@@ -11,8 +11,7 @@ var (
 	linesToPrint = flag.Int("tail", -1, "Tail to print at start")
 )
 
-func main() {
-	
+func main() {	
 	flag.Parse()
 	if !flag.Parsed() {
 		fmt.Fprintf(os.Stderr, "Invalid command line!\n")
