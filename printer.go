@@ -3,44 +3,48 @@ package main
 import (
 	"fmt"
 	"strings"
-	"github.com/ttacon/chalk"
+	color "github.com/daviddengcn/go-colortext"
 )
 
 func Error(format string, a... interface{}) {
-	fmt.Println(chalk.Red.Color(fmt.Sprintf(format, a...)))
+	defer color.ResetColor()
+	
+	color.Foreground(color.Red, true)
+	fmt.Println(fmt.Sprintf(format, a...))
 }
 
 func PrintSeparator() { }
 
 func PrintLine(line string) {
-	color := detectPrimaryColor(line)
-	fmt.Println(color.Color(line))
+	defer color.ResetColor()
+	color.Foreground(detectPrimaryColor(line), true)
+	fmt.Println(line)
 }
 
-func detectPrimaryColor(line string) chalk.Color {
+func detectPrimaryColor(line string) color.Color {
 	if strings.Contains(line, "TRACE") {
-		return chalk.Blue	
+		return color.Blue	
 	}
 
 	if strings.Contains(line, "DEBUG") {
-		return chalk.Blue	
+		return color.Blue	
 	}
 	
 	if strings.Contains(line, "INFO") {
-		return chalk.Cyan	
+		return color.Cyan	
 	}
 	
 	if strings.Contains(line, "WARN") {
-		return chalk.Yellow
+		return color.Yellow
 	}
 	
 	if strings.Contains(line, "ERROR") {
-		return chalk.Red
+		return color.Red
 	}
 	
 	if strings.Contains(line, "FATAL") {
-		return chalk.Red
+		return color.Red
 	}
 	
-	return chalk.White
+	return color.White
 }
